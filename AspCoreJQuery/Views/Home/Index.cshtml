@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="container">
+    <div class="row">
+     @*    <div class="col-md-4">
+            <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Name</label> 
+                <input type="text" class="form-control" id="Name" placeholder="Enter Name">
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">SurName</label>
+                <input type="text" class="form-control" id="SurName" placeholder="Enter Surname">
+            </div>
+            <br />
+            <button class="btn btn-info" onclick="Display()">Submit</button>
+            <br />
+            <h3 id="result"></h3> *@
+
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">First Number</label>
+                <input type="text" class="form-control" id="Num1" placeholder="Enter First Number">
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Second Number</label>
+                <input type="text" class="form-control" id="Num2" placeholder="Enter Second Number">
+            </div>
+            <br />
+            <button class="btn btn-info" onclick="Display()">Submit</button>
+            <br />
+            <h3 id="result"></h3>
+        </div>
+    </div>
+
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        // $(document).ready(function () {
+        //     alert("Welcome to Jquery")
+        // });
+        // function Display(){
+        //     var name = $("#Name").val();
+        //     var surname = $("#SurName").val();
+
+        //     var data = name + " " + surname;
+
+           
+
+        // $("#result").text(data);
+        // }
+
+
+    function Display(){
+      var n1 = parseInt($("#Num1").val());
+        var n2 = parseInt($("#Num2").val());
+
+        $.ajax({
+            type: 'Post',
+            url: '@Url.Action("Add")',
+            data: { num1: n1, num2: n2 },              /* store n1 value in num1 of controller store n2 value in num2 of controller */
+            dataType: 'text',
+            // success call back function
+            success: function (response, status, xhr) {
+                $("#result").text(response);
+            },
+            error: function (req, status, error) {
+                $("#result").text(error);
+            }
+            });
+   }
+
+
+    </script>
