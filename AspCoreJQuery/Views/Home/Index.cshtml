@@ -1,4 +1,4 @@
-﻿@{
+﻿﻿@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -9,20 +9,20 @@
 
 <div class="container">
     <div class="row">
-     @*    <div class="col-md-4">
-            <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Name</label> 
-                <input type="text" class="form-control" id="Name" placeholder="Enter Name">
-            </div>
+        @*    <div class="col-md-4">
+        <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Name</label>
+        <input type="text" class="form-control" id="Name" placeholder="Enter Name">
+        </div>
 
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">SurName</label>
-                <input type="text" class="form-control" id="SurName" placeholder="Enter Surname">
-            </div>
-            <br />
-            <button class="btn btn-info" onclick="Display()">Submit</button>
-            <br />
-            <h3 id="result"></h3> *@
+        <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">SurName</label>
+        <input type="text" class="form-control" id="SurName" placeholder="Enter Surname">
+        </div>
+        <br />
+        <button class="btn btn-info" onclick="Display()">Submit</button>
+        <br />
+        <h3 id="result"></h3> *@
 
         <div class="col-md-4">
             <div class="mb-3">
@@ -35,35 +35,37 @@
                 <input type="text" class="form-control" id="Num2" placeholder="Enter Second Number">
             </div>
             <br />
-            <button class="btn btn-info" onclick="Display()">Submit</button>
+            <button class="btn btn-info" onclick="Display()">Add</button>
+            <button class="btn btn-info" onclick="Display2()">Subtract</button>
+            <button class="btn btn-info" onclick="Calculate()">Calculate</button>
             <br />
             <h3 id="result"></h3>
         </div>
     </div>
 
-    </div>
+</div>
 
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript">
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
 
-        // $(document).ready(function () {
-        //     alert("Welcome to Jquery")
-        // });
-        // function Display(){
-        //     var name = $("#Name").val();
-        //     var surname = $("#SurName").val();
+    // $(document).ready(function () {
+    //     alert("Welcome to Jquery")
+    // });
+    // function Display(){
+    //     var name = $("#Name").val();
+    //     var surname = $("#SurName").val();
 
-        //     var data = name + " " + surname;
-
-           
-
-        // $("#result").text(data);
-        // }
+    //     var data = name + " " + surname;
 
 
-    function Display(){
-      var n1 = parseInt($("#Num1").val());
+
+    // $("#result").text(data);
+    // }
+
+
+    function Display() {
+        var n1 = parseInt($("#Num1").val());
         var n2 = parseInt($("#Num2").val());
 
         $.ajax({
@@ -78,8 +80,52 @@
             error: function (req, status, error) {
                 $("#result").text(error);
             }
-            });
-   }
+        });
+    }
+
+    function Display2() {
+        var n1 = parseInt($("#Num1").val());
+        var n2 = parseInt($("#Num2").val());
+
+        $.ajax({
+            type: 'Post',
+            url: '@Url.Action("Subtract")',
+            data: { num1: n1, num2: n2 },              /* store n1 value in num1 of controller store n2 value in num2 of controller */
+            dataType: 'text',
+            // success call back function
+            success: function (response, status, xhr) {
+                $("#result").text(response);
+            },
+            error: function (req, status, error) {
+                $("#result").text(error);
+            }
+        });
+    }
+
+    function Calculate() {
+        var n1 = parseInt($("#Num1").val());
+        var n2 = parseInt($("#Num2").val());
+
+        $.ajax({
+            type: 'Post',
+            url: '@Url.Action("Calculate")',
+            data: { num1: n1, num2: n2 },              /* store n1 value in num1 of controller store n2 value in num2 of controller */
+            dataType: 'json',
+            // success call back function
+            success: function (response, status, xhr) {
+                var data = "ADDITION RESULT" + response.add +
+                    "<br>SUBTRACTION RESULT" + response.subtract +
+                    "<br>MULTIPLY RESULT" + response.multiply +
+                    "<br>DIVISION RESULT" + response.division;
+                $("#result").html(data);
+            },
+            error: function (req, status, error) {
+                $("#result").text(error);
+            }
+        });
+    }
 
 
-    </script>
+
+
+</script>

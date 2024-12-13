@@ -25,6 +25,25 @@ namespace AspCoreJQuery.Controllers
         }
 
 
+        [HttpPost]
+        public int Subtract(int num1, int num2)
+        {
+            return num1 - num2;
+        }
+
+        [HttpPost]
+        public  Calculation  Calculate(int num1, int num2)          /* this will return calculation model type data*/
+        {
+           
+        Calculation mod = new Calculation();
+            mod.Add = num1+ num2;
+            mod.Subtract = num1 - num2;
+            mod.Multiply = num1 * num2;
+            mod.Division= (decimal)num1 / num2;
+            return mod;
+        }
+
+
         public IActionResult Privacy()
         {
             return View();
